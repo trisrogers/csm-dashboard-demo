@@ -138,4 +138,4 @@ MIT - For demonstration purposes only.
 
 ---
 
-Built as a demonstration of enterprise customer success management expertise for Anthropic APAC.
+Built as a demonstration of enterprise customer success management for Anthropic APAC.

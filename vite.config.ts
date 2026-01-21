@@ -11,4 +11,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  // Use Linux filesystem for cache to avoid WSL/Dropbox permission issues
+  cacheDir: '/tmp/vite-cache-csm-dashboard',
 })
