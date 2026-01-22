@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, Building2, BarChart3, Settings, User } from 'lucide-react'
+import { LayoutDashboard, Building2, BarChart3, Settings } from 'lucide-react'
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -20,7 +20,7 @@ export default function Header() {
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">A</span>
           </div>
-          <span className="font-semibold text-lg">CSM Dashboard</span>
+          <span className="font-semibold text-lg">Mock CSM Dashboard</span>
         </Link>
 
         {/* Navigation */}
@@ -48,16 +48,18 @@ export default function Header() {
           })}
         </nav>
 
-        {/* User Profile */}
-        <div className="flex items-center gap-3">
+        {/* User Profile - Clickable link to About Me */}
+        <Link to="/about" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <div className="text-right mr-2">
             <p className="text-sm font-medium">Tristan Rogers</p>
             <p className="text-xs text-muted-foreground">APAC Enterprise CSM</p>
           </div>
-          <div className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center">
-            <User className="h-5 w-5 text-muted-foreground" />
-          </div>
-        </div>
+          <img
+            src="/profile.jpg"
+            alt="Tristan Rogers"
+            className="h-9 w-9 rounded-full object-cover border-2 border-secondary"
+          />
+        </Link>
       </div>
     </header>
   )

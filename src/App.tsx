@@ -5,6 +5,7 @@ import Accounts from '@/pages/Accounts'
 import AccountDetail from '@/pages/AccountDetail'
 import Analytics from '@/pages/Analytics'
 import Settings from '@/pages/Settings'
+import AboutMe from '@/pages/AboutMe'
 import NotFound from '@/pages/NotFound'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="accounts/:accountId" element={<AccountDetail />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="about" element={<AboutMe />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

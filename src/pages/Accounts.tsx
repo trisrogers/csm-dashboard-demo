@@ -4,6 +4,7 @@ import { useAccountFilters } from '@/hooks/useAccountFilters'
 import { accounts } from '@/data/accounts'
 import { formatCurrency } from '@/lib/calculations'
 import { Building2 } from 'lucide-react'
+import type { AccountTier, ProductType } from '@/types'
 
 export default function Accounts() {
   const {
@@ -14,6 +15,19 @@ export default function Accounts() {
     resetFilters,
     toggleSort,
   } = useAccountFilters(accounts)
+
+  // Handlers for clickable tags
+  const handleFilterByTier = (tier: string) => {
+    updateFilter('tier', tier as AccountTier)
+  }
+
+  const handleFilterByCountry = (country: string) => {
+    updateFilter('country', country)
+  }
+
+  const handleFilterByProduct = (product: string) => {
+    updateFilter('product', product as ProductType)
+  }
 
   const totalFilteredArr = filteredAccounts.reduce((sum, acc) => sum + acc.arr, 0)
 
@@ -72,6 +86,9 @@ export default function Accounts() {
         accounts={filteredAccounts}
         filters={filters}
         toggleSort={toggleSort}
+        onFilterByTier={handleFilterByTier}
+        onFilterByCountry={handleFilterByCountry}
+        onFilterByProduct={handleFilterByProduct}
       />
     </div>
   )

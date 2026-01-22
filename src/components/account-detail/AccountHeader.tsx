@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import HealthScoreBadge from '@/components/accounts/HealthScoreBadge'
+import LogInteractionModal from './LogInteractionModal'
+import CreateTaskModal from './CreateTaskModal'
 import type { Account } from '@/types'
 import { formatCurrency, formatPercentage, daysUntil } from '@/lib/calculations'
 import {
@@ -19,6 +22,9 @@ interface AccountHeaderProps {
 }
 
 export default function AccountHeader({ account }: AccountHeaderProps) {
+  const [showInteractionModal, setShowInteractionModal] = useState(false)
+  const [showTaskModal, setShowTaskModal] = useState(false)
+  const [showMeetingToast, setShowMeetingToast] = useState(false)
   const daysToRenewal = daysUntil(account.contractEnd)
   const renewalUrgent = daysToRenewal <= 90
 
@@ -143,14 +149,46 @@ export default function AccountHeader({ account }: AccountHeaderProps) {
 
       {/* Action buttons */}
       <div className="flex gap-2 mt-4">
-        <Button size="sm">Log Interaction</Button>
-        <Button size="sm" variant="outline">
+        <Button size="sm" onClick={() => setShowInteractionModal(true)}>
+          Log Interaction
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => {
+            setShowMeetingToast(true)
+            setTimeout(() => setShowMeetingToast(false), 3000)
+          }}
+        >
           Schedule Meeting
         </Button>
-        <Button size="sm" variant="outline">
+        <Button size="sm" variant="outline" onClick={() => setShowTaskModal(true)}>
           Create Task
         </Button>
       </div>
+
+      {/* Toast for Schedule Meeting */}
+      {showMeetingToast && (
+        <div className="fixed bottom-4 right-4 z-50 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-in slide-in-from-bottom-5">
+          <Calendar className="h-5 w-5 text-blue-400" />
+          <div>
+            <p className="font-medium text-sm">Calendar Integration</p>
+            <p className="text-xs text-gray-300">Google Calendar / Outlook integration coming soon</p>
+          </div>
+        </div>
+      )}
+
+      {/* Modals */}
+      <LogInteractionModal
+        isOpen={showInteractionModal}
+        onClose={() => setShowInteractionModal(false)}
+        accountName={account.name}
+      />
+      <CreateTaskModal
+        isOpen={showTaskModal}
+        onClose={() => setShowTaskModal(false)}
+        accountName={account.name}
+      />
     </div>
   )
 }

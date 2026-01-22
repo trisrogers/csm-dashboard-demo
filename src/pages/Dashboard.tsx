@@ -72,6 +72,7 @@ export default function Dashboard() {
           trendValue={`+${metrics.arrChange}% YoY`}
           sparklineData={arrSparkline}
           icon={<DollarSign className="h-4 w-4" />}
+          infoTooltip="Annual Recurring Revenue - total contracted value across all accounts"
         />
         <MetricCard
           title="Net Revenue Retention"
@@ -81,6 +82,7 @@ export default function Dashboard() {
           sparklineData={nrrSparkline}
           variant={metrics.nrr >= 115 ? 'success' : metrics.nrr >= 100 ? 'warning' : 'danger'}
           icon={<Percent className="h-4 w-4" />}
+          infoTooltip="Measures revenue growth including expansion, upsells, and cross-sells. Target: 115-120%"
         />
         <MetricCard
           title="Gross Revenue Retention"
@@ -89,6 +91,7 @@ export default function Dashboard() {
           trendValue={`Target: ${metrics.grrTarget}%`}
           variant={metrics.grr >= 92 ? 'success' : 'warning'}
           icon={<Percent className="h-4 w-4" />}
+          infoTooltip="Measures revenue retention excluding expansion - core retention health. Target: >90%"
         />
         <MetricCard
           title="Expansion Pipeline"
@@ -96,6 +99,7 @@ export default function Dashboard() {
           trend="up"
           trendValue="Weighted value"
           icon={<TrendingUp className="h-4 w-4" />}
+          infoTooltip="Total weighted value of identified upsell and cross-sell opportunities"
         />
         <MetricCard
           title="Avg Health Score"
@@ -105,6 +109,7 @@ export default function Dashboard() {
           sparklineData={healthSparkline}
           variant={metrics.avgHealthScore >= 80 ? 'success' : metrics.avgHealthScore >= 60 ? 'warning' : 'danger'}
           icon={<Activity className="h-4 w-4" />}
+          infoTooltip="Weighted composite of Usage (30%), Engagement (25%), Outcomes (20%), Support (15%), Relationships (10%)"
         />
         <MetricCard
           title="Accounts at Risk"
@@ -112,6 +117,7 @@ export default function Dashboard() {
           subtitle={`of ${metrics.totalAccounts} accounts`}
           variant={metrics.accountsAtRisk > 2 ? 'danger' : metrics.accountsAtRisk > 0 ? 'warning' : 'success'}
           icon={<AlertTriangle className="h-4 w-4" />}
+          infoTooltip="Accounts with health score below 60 requiring immediate attention"
         />
       </div>
 

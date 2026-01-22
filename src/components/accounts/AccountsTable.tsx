@@ -19,12 +19,18 @@ interface AccountsTableProps {
   accounts: Account[]
   filters: AccountFilters
   toggleSort: (column: AccountFilters['sortBy']) => void
+  onFilterByTier?: (tier: string) => void
+  onFilterByCountry?: (country: string) => void
+  onFilterByProduct?: (product: string) => void
 }
 
 export default function AccountsTable({
   accounts,
   filters,
   toggleSort,
+  onFilterByTier,
+  onFilterByCountry,
+  onFilterByProduct,
 }: AccountsTableProps) {
   const SortIcon = ({ column }: { column: AccountFilters['sortBy'] }) => {
     if (filters.sortBy !== column) {
@@ -56,11 +62,17 @@ export default function AccountsTable({
           key={p.type}
           variant="outline"
           className={cn(
-            'text-xs',
-            p.type === 'api' && 'border-blue-200 text-blue-700',
-            p.type === 'enterprise' && 'border-purple-200 text-purple-700',
-            p.type === 'code' && 'border-cyan-200 text-cyan-700'
+            'text-xs cursor-pointer hover:opacity-80 transition-opacity',
+            p.type === 'api' && 'border-blue-200 text-blue-700 hover:bg-blue-50',
+            p.type === 'enterprise' && 'border-purple-200 text-purple-700 hover:bg-purple-50',
+            p.type === 'code' && 'border-cyan-200 text-cyan-700 hover:bg-cyan-50'
           )}
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            onFilterByProduct?.(p.type)
+          }}
+          title={`Filter by ${p.type === 'api' ? 'API' : p.type === 'enterprise' ? 'Enterprise' : 'Code'}`}
         >
           {p.type === 'api' ? 'API' : p.type === 'enterprise' ? 'Enterprise' : 'Code'}
         </Badge>
@@ -193,9 +205,32 @@ export default function AccountsTable({
                   <TableCell>
                     <div className="flex flex-wrap gap-1">{getProductBadges(account)}</div>
                   </TableCell>
-                  <TableCell>{account.country}</TableCell>
                   <TableCell>
-                    <Badge variant={getTierBadgeVariant(account.tier)}>{account.tier}</Badge>
+                    <span
+                      className="cursor-pointer hover:text-primary hover:underline transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                        onFilterByCountry?.(account.country)
+                      }}
+                      title={`Filter by ${account.country}`}
+                    >
+                      {account.country}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={getTierBadgeVariant(account.tier)}
+                      className="cursor-pointer hover:opacity-80 transition-opacity"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                        onFilterByTier?.(account.tier)
+                      }}
+                      title={`Filter by ${account.tier}`}
+                    >
+                      {account.tier}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <div className={getDaysToRenewalColor(daysToRenewal)}>
