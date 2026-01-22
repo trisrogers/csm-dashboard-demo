@@ -2,6 +2,64 @@
 
 Detailed technical record of changes, decisions, and testing across development sessions.
 
+## Session January 22, 2026 - GitHub & Vercel Deployment Complete
+
+**Duration**: ~15 minutes
+**Objective**: Set up GitHub repository and deploy application to Vercel.
+
+### Deployment Completed
+
+**GitHub Repository:**
+- Repository: https://github.com/trisrogers/csm-dashboard-demo
+- Visibility: Public
+- Branch: master
+
+**Vercel Deployment:**
+- Live URL: **https://csm-dashboard-demo.vercel.app**
+- Auto-deployment configured via GitHub integration
+- SPA routing working correctly with vercel.json
+
+### Steps Completed
+
+1. **Installed GitHub CLI (gh)** on WSL Ubuntu 24.04
+   - Used official GitHub apt repository
+   - Resolved GPG key issue with curl + gpg --dearmor method
+
+2. **Authenticated with GitHub**
+   - Used `gh auth login` with web browser OAuth flow
+   - Account: trisrogers
+
+3. **Created GitHub Repository**
+   - `gh repo create csm-dashboard-demo --public --source=. --remote=origin`
+   - Added description for discoverability
+
+4. **Pushed Code**
+   - `git push -u origin master`
+   - All 3 commits pushed successfully
+
+5. **Deployed to Vercel**
+   - Connected GitHub repo to Vercel
+   - Auto-detected Vite configuration
+   - Deployed successfully on first attempt
+
+### Documentation Updates
+
+Updated live URL in all documentation files:
+- README.md
+- DEMO_GUIDE.md
+- CLAUDE.md
+- CLAUDE-session-history.md
+
+### Project Now Complete
+
+✅ All development phases complete (MVP, Enhanced, Polish)
+✅ GitHub repository live and public
+✅ Vercel deployment accessible
+✅ Documentation updated with live URLs
+✅ Ready for job application submission
+
+---
+
 ## Session January 22, 2026 - Final Polish & Documentation Complete
 
 **Duration**: ~45 minutes
@@ -21,7 +79,7 @@ Detailed technical record of changes, decisions, and testing across development 
   - Accounts List filtering and search capabilities
   - Account Detail showcase (Commonwealth Bank) with all 9 tabs
   - Analytics dashboard and Settings page explanation
-  - Live demo URL reference: https://anthropic-csm-demo.vercel.app
+  - Live demo URL: https://csm-dashboard-demo.vercel.app
 
 - **TECHNICAL_DECISIONS.md**: Created detailed architecture rationale document
   - Framework & Build decisions (Vite + React 18 + TypeScript)

@@ -2,7 +2,7 @@
 
 A walkthrough of key features demonstrating enterprise customer success management capabilities.
 
-**Live Demo:** [https://anthropic-csm-demo.vercel.app](https://anthropic-csm-demo.vercel.app)
+**Live Demo:** [https://csm-dashboard-demo.vercel.app](https://csm-dashboard-demo.vercel.app)
 
 ---
 

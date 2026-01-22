@@ -36,7 +36,7 @@ This is the **Anthropic APAC Enterprise CSM Dashboard** - a production-grade dem
 
 **Deployment:**
 - Frontend: Vercel, Netlify, or GitHub Pages
-- Target URL: anthropic-csm-demo.vercel.app (or similar)
+- **Live URL:** https://csm-dashboard-demo.vercel.app
 
 ### Data Model
 

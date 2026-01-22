@@ -2,7 +2,7 @@
 
 A production-grade demonstration application showcasing enterprise customer success management for Anthropic's AI product portfolio (Claude API, Claude Enterprise, Claude Code) across the APAC region.
 
-**Live Demo:** [https://anthropic-csm-demo.vercel.app](https://anthropic-csm-demo.vercel.app)
+**Live Demo:** [https://csm-dashboard-demo.vercel.app](https://csm-dashboard-demo.vercel.app)
 
 ## Overview
 
