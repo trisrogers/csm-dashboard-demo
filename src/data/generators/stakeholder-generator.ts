@@ -126,7 +126,8 @@ export function generateStakeholders(account: Account): Stakeholder[] {
   for (let i = 0; i < count; i++) {
     const role = roles[i % roles.length]
     const name = names[i % names.length]
-    const emailDomain = account.website.replace('https://', '').replace('http://', '').replace('www.', '')
+    // Use fake domain to avoid accidental emails to real addresses
+    const emailDomain = 'fal.se'
 
     const daysAgo = Math.floor(Math.random() * 30) + 1
     const lastContactDate = new Date()

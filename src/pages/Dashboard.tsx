@@ -5,6 +5,8 @@ import RevenueByProductChart from '@/components/dashboard/RevenueByProductChart'
 import KPIScorecard from '@/components/dashboard/KPIScorecard'
 import AccountsAtRisk from '@/components/dashboard/AccountsAtRisk'
 import RecentActivity from '@/components/dashboard/RecentActivity'
+import ExpansionOpportunities from '@/components/dashboard/ExpansionOpportunities'
+import RegionalMap from '@/components/dashboard/RegionalMap'
 import { accounts } from '@/data/accounts'
 import { calculatePortfolioMetrics, formatCurrency, formatPercentage } from '@/lib/calculations'
 
@@ -121,16 +123,22 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <HealthDistributionChart data={metrics.accountsByHealth} />
-        <RevenueByProductChart data={metrics.arrByProduct} />
+      {/* Regional Map & Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <RegionalMap accounts={accounts} />
+        <HealthDistributionChart data={metrics.accountsByHealth} accounts={accounts} />
         <KPIScorecard items={kpiItems} />
       </div>
 
+      {/* Revenue Chart */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <RevenueByProductChart data={metrics.arrByProduct} />
+      </div>
+
       {/* Bottom Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <AccountsAtRisk accounts={accounts} />
+        <ExpansionOpportunities accounts={accounts} />
         <RecentActivity accounts={accounts} />
       </div>
 

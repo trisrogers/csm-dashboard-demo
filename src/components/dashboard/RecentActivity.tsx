@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { Account, Interaction } from '@/types'
@@ -93,7 +94,12 @@ export default function RecentActivity({ accounts }: RecentActivityProps) {
                       {formatDate(activity.interaction.date)}
                     </span>
                   </div>
-                  <p className="text-sm font-medium truncate">{activity.accountName}</p>
+                  <Link
+                    to={`/accounts/${activity.accountId}`}
+                    className="text-sm font-medium truncate hover:text-primary hover:underline transition-colors"
+                  >
+                    {activity.accountName}
+                  </Link>
                   <p className="text-xs text-muted-foreground line-clamp-2">
                     {activity.interaction.summary}
                   </p>

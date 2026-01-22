@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { Task } from '@/types'
@@ -10,13 +11,40 @@ interface TasksListProps {
 }
 
 export default function TasksList({ tasks, showAll = false }: TasksListProps) {
-  const sortedTasks = [...tasks].sort((a, b) => {
-    // Sort by status (incomplete first), then by due date
+  // Track toggled tasks (tasks that have been clicked to change state)
+  const [toggledTasks, setToggledTasks] = useState<Set<string>>(new Set())
+
+  const handleTaskClick = (taskId: string) => {
+    setToggledTasks(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(taskId)) {
+        newSet.delete(taskId)
+      } else {
+        newSet.add(taskId)
+      }
+      return newSet
+    })
+  }
+
+  // Derive effective status based on toggles
+  const getEffectiveStatus = (task: Task): Task['status'] => {
+    const isToggled = toggledTasks.has(task.id)
+    if (isToggled) {
+      return task.status === 'Complete' ? 'Not Started' : 'Complete'
+    }
+    return task.status
+  }
+
+  const sortedTasks = useMemo(() => [...tasks].sort((a, b) => {
+    // Sort by effective status (incomplete first), then by due date
     const statusOrder = { 'Not Started': 0, 'In Progress': 1, Blocked: 2, Complete: 3 }
-    const statusDiff = statusOrder[a.status] - statusOrder[b.status]
+    const statusA = getEffectiveStatus(a)
+    const statusB = getEffectiveStatus(b)
+    const statusDiff = statusOrder[statusA] - statusOrder[statusB]
     if (statusDiff !== 0) return statusDiff
     return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [tasks, toggledTasks])
 
   const getStatusIcon = (status: Task['status']) => {
     switch (status) {
@@ -63,8 +91,8 @@ export default function TasksList({ tasks, showAll = false }: TasksListProps) {
     return date.toLocaleDateString('en-AU', { month: 'short', day: 'numeric' })
   }
 
-  const incompleteTasks = sortedTasks.filter((t) => t.status !== 'Complete')
-  const completedTasks = sortedTasks.filter((t) => t.status === 'Complete')
+  const incompleteTasks = sortedTasks.filter((t) => getEffectiveStatus(t) !== 'Complete')
+  const completedTasks = sortedTasks.filter((t) => getEffectiveStatus(t) === 'Complete')
 
   return (
     <Card>
@@ -84,41 +112,45 @@ export default function TasksList({ tasks, showAll = false }: TasksListProps) {
             {/* Incomplete tasks */}
             {incompleteTasks.length > 0 && (
               <div className="space-y-2">
-                {incompleteTasks.map((task) => (
-                  <div
-                    key={task.id}
-                    className={cn(
-                      'flex items-start gap-3 p-3 rounded-lg border',
-                      isOverdue(task.dueDate) &&
-                        task.status !== 'Complete' &&
-                        'border-red-200 bg-red-50'
-                    )}
-                  >
-                    <div className="mt-0.5">{getStatusIcon(task.status)}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium">{task.description}</span>
-                        {getPriorityBadge(task.priority)}
-                      </div>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                        <span>Owner: {task.owner}</span>
-                        <span
-                          className={cn(
-                            isOverdue(task.dueDate) && task.status !== 'Complete'
-                              ? 'text-red-600 font-medium'
-                              : ''
-                          )}
-                        >
-                          Due: {formatDueDate(task.dueDate)}
-                          {isOverdue(task.dueDate) && task.status !== 'Complete' && ' (Overdue)'}
-                        </span>
-                        {task.relatedType && (
-                          <span className="capitalize">Related: {task.relatedType}</span>
+                {incompleteTasks.map((task) => {
+                    const effectiveStatus = getEffectiveStatus(task)
+                    return (
+                      <button
+                        key={task.id}
+                        onClick={() => handleTaskClick(task.id)}
+                        className={cn(
+                          'flex items-start gap-3 p-3 rounded-lg border w-full text-left transition-all hover:bg-secondary/50',
+                          isOverdue(task.dueDate) &&
+                            effectiveStatus !== 'Complete' &&
+                            'border-red-200 bg-red-50 hover:bg-red-100'
                         )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                      >
+                        <div className="mt-0.5">{getStatusIcon(effectiveStatus)}</div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm font-medium">{task.description}</span>
+                            {getPriorityBadge(task.priority)}
+                          </div>
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <span>Owner: {task.owner}</span>
+                            <span
+                              className={cn(
+                                isOverdue(task.dueDate) && effectiveStatus !== 'Complete'
+                                  ? 'text-red-600 font-medium'
+                                  : ''
+                              )}
+                            >
+                              Due: {formatDueDate(task.dueDate)}
+                              {isOverdue(task.dueDate) && effectiveStatus !== 'Complete' && ' (Overdue)'}
+                            </span>
+                            {task.relatedType && (
+                              <span className="capitalize">Related: {task.relatedType}</span>
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    )
+                  })}
               </div>
             )}
 
@@ -130,13 +162,14 @@ export default function TasksList({ tasks, showAll = false }: TasksListProps) {
                 </div>
                 <div className="space-y-2">
                   {(showAll ? completedTasks : completedTasks.slice(0, 3)).map((task) => (
-                    <div
+                    <button
                       key={task.id}
-                      className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 opacity-60"
+                      onClick={() => handleTaskClick(task.id)}
+                      className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 opacity-60 hover:opacity-80 transition-opacity w-full text-left"
                     >
-                      {getStatusIcon(task.status)}
+                      {getStatusIcon(getEffectiveStatus(task))}
                       <span className="text-sm line-through">{task.description}</span>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>

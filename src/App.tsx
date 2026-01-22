@@ -6,6 +6,7 @@ import AccountDetail from '@/pages/AccountDetail'
 import Analytics from '@/pages/Analytics'
 import Settings from '@/pages/Settings'
 import AboutMe from '@/pages/AboutMe'
+import MockSalesforce from '@/pages/MockSalesforce'
 import NotFound from '@/pages/NotFound'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="analytics" element={<Analytics />} />
           <Route path="settings" element={<Settings />} />
           <Route path="about" element={<AboutMe />} />
+          <Route path="salesforce" element={<MockSalesforce />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

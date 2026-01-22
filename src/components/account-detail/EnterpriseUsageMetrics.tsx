@@ -1,13 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-} from 'recharts'
 import type { EnterpriseUsageMetrics as EnterpriseMetrics } from '@/types'
 import { Users, Activity, Briefcase, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -84,37 +75,72 @@ export default function EnterpriseUsageMetrics({ data }: EnterpriseUsageMetricsP
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Users by Department */}
+        {/* Users by Department - Stacked Bar Chart */}
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Users by Department</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data.departmentBreakdown} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" tick={{ fontSize: 12 }} />
-                  <YAxis
-                    type="category"
-                    dataKey="department"
-                    tick={{ fontSize: 12 }}
-                    width={100}
-                  />
-                  <Tooltip />
-                  <Bar dataKey="activeUsers" name="Active" fill="#3b82f6" />
-                  <Bar dataKey="users" name="Total" fill="#e5e7eb" />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="space-y-3">
+              {data.departmentBreakdown.map((dept) => {
+                const utilization = dept.users > 0 ? (dept.activeUsers / dept.users) * 100 : 0
+                const isLowUtilization = utilization < 60
+                return (
+                  <div key={dept.department} className="space-y-1">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className={cn(
+                        "font-medium",
+                        isLowUtilization && "text-red-600"
+                      )}>
+                        {dept.department}
+                      </span>
+                      <span className={cn(
+                        "text-xs",
+                        isLowUtilization ? "text-red-600 font-medium" : "text-muted-foreground"
+                      )}>
+                        {utilization.toFixed(0)}% active ({dept.activeUsers}/{dept.users})
+                      </span>
+                    </div>
+                    {/* Stacked bar */}
+                    <div className={cn(
+                      "relative h-6 rounded-md overflow-hidden",
+                      isLowUtilization ? "bg-red-100" : "bg-gray-100"
+                    )}>
+                      {/* Active users (filled portion) */}
+                      <div
+                        className={cn(
+                          "absolute h-full rounded-md transition-all",
+                          isLowUtilization ? "bg-red-500" : "bg-blue-500"
+                        )}
+                        style={{ width: `${utilization}%` }}
+                      />
+                      {/* Labels inside bar */}
+                      <div className="absolute inset-0 flex items-center justify-between px-2 text-xs">
+                        <span className={cn(
+                          "font-medium",
+                          utilization > 30 ? "text-white" : (isLowUtilization ? "text-red-700" : "text-gray-600")
+                        )}>
+                          {dept.activeUsers} active
+                        </span>
+                        <span className={cn(
+                          utilization < 70 ? (isLowUtilization ? "text-red-700" : "text-gray-600") : "text-white/70"
+                        )}>
+                          {dept.users} total
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
             <div className="mt-4 flex justify-center gap-4 text-xs">
               <div className="flex items-center gap-1">
                 <div className="h-3 w-3 rounded bg-blue-500" />
-                <span>Active Users</span>
+                <span>Active (≥60%)</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="h-3 w-3 rounded bg-gray-200" />
-                <span>Total Seats</span>
+                <div className="h-3 w-3 rounded bg-red-500" />
+                <span>Low Utilization (&lt;60%)</span>
               </div>
             </div>
           </CardContent>

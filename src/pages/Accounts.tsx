@@ -1,12 +1,20 @@
+import { useState } from 'react'
 import AccountFilters from '@/components/accounts/AccountFilters'
 import AccountsTable from '@/components/accounts/AccountsTable'
+import { PrioritizationView } from '@/components/accounts/PrioritizationView'
 import { useAccountFilters } from '@/hooks/useAccountFilters'
 import { accounts } from '@/data/accounts'
 import { formatCurrency } from '@/lib/calculations'
-import { Building2 } from 'lucide-react'
+import { Building2, LayoutList, ListChecks } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import type { AccountTier, ProductType } from '@/types'
 
+type ViewMode = 'table' | 'priority'
+
 export default function Accounts() {
+  const [viewMode, setViewMode] = useState<ViewMode>('table')
+
   const {
     filters,
     filteredAccounts,
@@ -42,12 +50,41 @@ export default function Accounts() {
           </h1>
           <p className="text-muted-foreground">Manage your APAC enterprise accounts</p>
         </div>
-        <div className="text-right">
-          <div className="text-2xl font-bold">{filteredAccounts.length}</div>
-          <div className="text-sm text-muted-foreground">
-            {filteredAccounts.length === accounts.length
-              ? 'Total accounts'
-              : `of ${accounts.length} accounts`}
+        <div className="flex items-center gap-4">
+          {/* View Toggle */}
+          <div className="flex items-center border rounded-lg overflow-hidden">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setViewMode('table')}
+              className={cn(
+                "rounded-none px-3",
+                viewMode === 'table' && "bg-secondary"
+              )}
+            >
+              <LayoutList className="h-4 w-4 mr-1" />
+              Table
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setViewMode('priority')}
+              className={cn(
+                "rounded-none px-3",
+                viewMode === 'priority' && "bg-secondary"
+              )}
+            >
+              <ListChecks className="h-4 w-4 mr-1" />
+              Priority
+            </Button>
+          </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold">{filteredAccounts.length}</div>
+            <div className="text-sm text-muted-foreground">
+              {filteredAccounts.length === accounts.length
+                ? 'Total accounts'
+                : `of ${accounts.length} accounts`}
+            </div>
           </div>
         </div>
       </div>
@@ -81,15 +118,19 @@ export default function Accounts() {
         </div>
       </div>
 
-      {/* Table */}
-      <AccountsTable
-        accounts={filteredAccounts}
-        filters={filters}
-        toggleSort={toggleSort}
-        onFilterByTier={handleFilterByTier}
-        onFilterByCountry={handleFilterByCountry}
-        onFilterByProduct={handleFilterByProduct}
-      />
+      {/* Content */}
+      {viewMode === 'table' ? (
+        <AccountsTable
+          accounts={filteredAccounts}
+          filters={filters}
+          toggleSort={toggleSort}
+          onFilterByTier={handleFilterByTier}
+          onFilterByCountry={handleFilterByCountry}
+          onFilterByProduct={handleFilterByProduct}
+        />
+      ) : (
+        <PrioritizationView accounts={filteredAccounts} />
+      )}
     </div>
   )
 }

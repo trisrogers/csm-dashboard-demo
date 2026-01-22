@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import type { SalesforceData } from '@/types'
@@ -5,9 +6,11 @@ import { ExternalLink, RefreshCw, Check, AlertCircle, Clock } from 'lucide-react
 
 interface SalesforceIntegrationProps {
   salesforce: SalesforceData
+  accountId?: string
+  accountName?: string
 }
 
-export default function SalesforceIntegration({ salesforce }: SalesforceIntegrationProps) {
+export default function SalesforceIntegration({ salesforce, accountId, accountName }: SalesforceIntegrationProps) {
   const getSyncStatusIcon = () => {
     switch (salesforce.syncStatus) {
       case 'success':
@@ -98,16 +101,14 @@ export default function SalesforceIntegration({ salesforce }: SalesforceIntegrat
             </div>
           </div>
 
-          {/* Link to Salesforce */}
-          <a
-            href={salesforce.sfAccountUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Link to Salesforce (mock page) */}
+          <Link
+            to={`/salesforce?accountId=${accountId || ''}&accountName=${encodeURIComponent(accountName || '')}&sfId=${salesforce.sfAccountId}`}
             className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800"
           >
             <ExternalLink className="h-4 w-4" />
             View in Salesforce
-          </a>
+          </Link>
         </div>
       </CardContent>
     </Card>

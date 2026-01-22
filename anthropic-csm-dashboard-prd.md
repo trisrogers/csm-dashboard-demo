@@ -1127,9 +1127,61 @@ Mock implementation should use realistic JSON data structure matching Salesforce
 
 ---
 
+## Additional Features (v0.5 & v0.6)
+
+The following features were added beyond the original PRD scope to enhance the demonstration application:
+
+### 10. Demo Application Enhancements
+
+**10.1 Application Branding & Context**
+- **Title:** "Mock CSM Dashboard" - Clear identification as demonstration
+- **Warning Banner:** Dismissable red banner explaining demo nature, persists via localStorage
+- **About Me Page:** CSM applicant profile/resume accessible from header
+- **Mock Salesforce Page:** Landing page when clicking "View in Salesforce" explaining mock integration
+
+**10.2 Dashboard Enhancements**
+- **Info Tooltips:** Hover icons on each metric card explaining KPI definitions
+- **Clickable Filter Tags:** Industry and country badges act as quick filters to Accounts page
+- **Expansion Opportunities Card:** Top 5 weighted expansion deals with account links
+- **Health Distribution Hover:** Shows account names when hovering over chart segments
+- **Linked Recent Activity:** Company names in activity feed link to account detail pages
+
+**10.3 Interaction & Task Management**
+- **Log Interaction Modal:** Quick-access modal for logging customer interactions
+- **Create Task Modal:** Task creation from header with priority and due date
+- **Schedule Meeting Modal:** Meeting scheduling simulation with timezone display
+- **Interactive Tasks:** Click-to-toggle task completion with visual strikethrough
+- **Interaction Timeline:** Visual timeline component in Plan & Tasks tab showing chronological interactions
+
+**10.4 Usage & Analytics Enhancements**
+- **Stacked Department Usage:** Horizontal bar chart showing active vs total users per department
+- **Low Utilization Highlighting:** Departments with <60% utilization highlighted in red
+- **Generate with Claude Button:** QBR preparation feature generating AI-style talking points
+
+**10.5 Data Safety**
+- **Fake Email Domain:** All stakeholder emails use @fal.se domain to prevent accidental contact
+- **Mock External Links:** External service links redirect to explanatory mock pages
+
+### 11. Implementation Notes
+
+**Data Architecture:**
+- 13 fully populated APAC enterprise accounts with realistic data
+- Industry-specific stakeholder role templates
+- Country-specific name generation for authenticity
+- Comprehensive usage history with multi-product tracking
+
+**UI/UX Decisions:**
+- Desktop-first design optimized for 1920x1080
+- Enterprise data-dense layout prioritizing information over whitespace
+- Consistent color coding: Green (healthy), Yellow (stable), Orange (at-risk), Red (critical)
+- shadcn/ui component library for professional enterprise aesthetic
+
+---
+
 ## Version History
 
 - **v1.0** (January 21, 2026) - Initial PRD completed
+- **v1.1** (January 22, 2026) - Added Additional Features section documenting v0.5/v0.6 enhancements
 - **Next:** Technical architecture documentation
 - **Then:** Sprint 1 development kickoff
 

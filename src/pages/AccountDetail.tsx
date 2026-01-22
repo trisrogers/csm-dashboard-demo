@@ -11,6 +11,9 @@ import { FeatureRequestsTab } from '@/components/account-detail/FeatureRequestsT
 import { UseCasesTab } from '@/components/account-detail/UseCasesTab'
 import { ExpansionTab } from '@/components/account-detail/ExpansionTab'
 import { QBRTab } from '@/components/account-detail/QBRTab'
+import { SupportTab } from '@/components/account-detail/SupportTab'
+import { StrategicPlan } from '@/components/account-detail/StrategicPlan'
+import InteractionTimeline from '@/components/account-detail/InteractionTimeline'
 import { getAccountById } from '@/data/accounts'
 import {
   LayoutDashboard,
@@ -21,6 +24,7 @@ import {
   Lightbulb,
   ClipboardList,
   Calendar,
+  Headphones,
 } from 'lucide-react'
 
 export default function AccountDetail() {
@@ -38,6 +42,7 @@ export default function AccountDetail() {
     { value: 'stakeholders', label: 'Stakeholders', icon: Users },
     { value: 'features', label: 'Feature Requests', icon: MessageSquare },
     { value: 'usecases', label: 'Use Cases', icon: Lightbulb },
+    { value: 'support', label: 'Support', icon: Headphones },
     { value: 'plan', label: 'Plan & Tasks', icon: ClipboardList },
     { value: 'qbr', label: 'QBR', icon: Calendar },
   ]
@@ -70,7 +75,7 @@ export default function AccountDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <ContractDetails account={account} />
             <div className="space-y-6">
-              <SalesforceIntegration salesforce={account.salesforce} />
+              <SalesforceIntegration salesforce={account.salesforce} accountId={account.id} accountName={account.name} />
               <TasksList tasks={account.tasks} />
             </div>
           </div>
@@ -101,10 +106,19 @@ export default function AccountDetail() {
           <UseCasesTab account={account} />
         </TabsContent>
 
+        {/* Support Tab */}
+        <TabsContent value="support">
+          <SupportTab account={account} />
+        </TabsContent>
+
         {/* Plan & Tasks Tab */}
         <TabsContent value="plan">
           <div className="space-y-6">
-            <TasksList tasks={account.tasks} showAll />
+            <StrategicPlan account={account} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <TasksList tasks={account.tasks} showAll />
+              <InteractionTimeline interactions={account.interactions} />
+            </div>
           </div>
         </TabsContent>
 
