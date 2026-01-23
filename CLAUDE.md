@@ -132,12 +132,18 @@ See the PRD (anthropic-csm-dashboard-prd.md) section 7.2 for detailed TypeScript
 - **TypeScript Strict Mode:** Full type safety implementation - IMPLEMENTED
 
 ### Phase 4: High-Priority Features - COMPLETE
-- **Regional Performance Map:** Interactive APAC map with ARR bubble sizing and health coloring - IMPLEMENTED
+- **Regional Performance Map:** Interactive APAC map with ARR bubble sizing and health coloring - REMOVED (v0.7 simplification)
 - **Support & Technical Health Tab:** Support ticket metrics, engagement tracking, severity/category charts - IMPLEMENTED
 - **Safety & Compliance Section:** SOC2, ISO27001, GDPR, HIPAA, PCI DSS tracking with regional standards (APRA, MAS) - IMPLEMENTED
 - **Strategic Account Plan:** Goals tracking with progress, key initiatives, risk factors, success criteria - IMPLEMENTED
 - **Account Prioritization View:** Risk-weighted sorting (Health × ARR), top 5 actions per account - IMPLEMENTED
 - **v0.6 Dashboard Enhancements:** Expansion Opportunities card, interactive tasks, department usage stacking - IMPLEMENTED
+
+### Phase 5: UI Refinements & Branding - COMPLETE
+- **Anthropic Brand Color:** Updated to official orange (#D97757) throughout application - IMPLEMENTED
+- **Logo Update:** Replaced text logo with Anthropic SVG logo in header - IMPLEMENTED
+- **Dashboard Simplification:** Removed Regional Map, streamlined to 2-column layout - IMPLEMENTED
+- **About Me Page:** Updated with CSM focus, professional resume summary, enhanced skills section - IMPLEMENTED
 
 ## Critical Implementation Notes
 
@@ -298,19 +304,22 @@ Deployed as static frontend (no backend server required):
 ✅ All core CSM workflows represented (account management, health scoring, pipeline tracking)
 ✅ Realistic APAC company data for 13 accounts with regional considerations
 ✅ Professional enterprise UI with Tailwind CSS + shadcn/ui
+✅ Anthropic brand color scheme (#D97757 orange) applied throughout
+✅ Anthropic logo in header navigation
 ✅ Mock Salesforce integration with account ownership
 ✅ All visualizations (charts, tables, cards) and filters fully functional
 ✅ Comprehensive Analytics page with 8 visualizations
 ✅ Settings page with user preferences
+✅ About Me page with CSM-focused resume and professional summary
 ✅ Clean, TypeScript codebase with strict type checking
 ✅ Production build passing successfully (999KB JS + 51KB CSS)
 ✅ Deployed to Vercel: https://csm-dashboard-demo.vercel.app
 ✅ GitHub repository public: https://github.com/trisrogers/csm-dashboard-demo
-✅ Regional Performance Map with APAC visualization
 ✅ Support & Technical Health tracking with metrics
 ✅ Safety & Compliance section with multi-standard tracking
 ✅ Strategic Account Planning with goals and initiatives
 ✅ Account Prioritization by risk-weighted scoring
+✅ Streamlined dashboard layout (2-column grid)
 ✅ Comprehensive feature documentation (DEMO_GUIDE.md, TECHNICAL_DECISIONS.md)
 ✅ Demonstrates deep understanding of Enterprise CSM metrics and APAC dynamics
 ✅ PRD audit completed (79% coverage of original requirements)
@@ -339,7 +348,6 @@ src/
 │   │   ├── RevenueByProductChart.tsx    # Product revenue breakdown
 │   │   ├── AccountsAtRisk.tsx           # Low health accounts
 │   │   ├── RecentActivity.tsx           # Activity timeline
-│   │   ├── RegionalMap.tsx              # APAC map with bubble sizing
 │   │   └── ExpansionOpportunities.tsx   # Pipeline visualization
 │   ├── accounts/
 │   │   ├── AccountsTable.tsx            # Filterable, sortable list
