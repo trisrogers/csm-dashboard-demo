@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
 import MainLayout from '@/components/layout/MainLayout'
 import Dashboard from '@/pages/Dashboard'
 import Accounts from '@/pages/Accounts'
@@ -24,6 +25,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <VercelAnalytics />
     </BrowserRouter>
   )
 }
