@@ -72,19 +72,20 @@ const earlierRoles = [
 ]
 
 const keySkills = [
-  { name: 'Communication', icon: MessageSquare },
+  { name: 'Stakeholder Engagement', icon: Users },
   { name: 'Problem Solving', icon: Brain },
   { name: 'Continual Learning', icon: Target },
-  { name: 'Technical Writing', icon: PenTool },
-  { name: 'Consensus Building', icon: Users },
+  { name: 'Technical Communication', icon: MessageSquare },
+  { name: 'Consensus Building', icon: PenTool },
 ]
 
 const technicalSkills = [
   'UiPath Studio',
   'MS/Google Office Suite',
   'PM Suites: MS Project, Jira, DevOps, ClickUp',
-  'Linux',
-  'Basic SQL',
+  'Linux Admin',
+  'API Integrations',
+  'Data Cleansing / Migration',
   'AI Engineering',
 ]
 
@@ -101,7 +102,7 @@ export default function AboutMe() {
           />
           <div className="flex-1">
             <h1 className="text-4xl font-bold text-primary mb-2">Tristan Rogers</h1>
-            <p className="text-xl text-muted-foreground mb-4">IT Project Manager</p>
+            <p className="text-xl text-muted-foreground mb-4">Customer Success Manager</p>
 
             <div className="flex flex-wrap gap-4 text-sm">
               <a
@@ -135,7 +136,7 @@ export default function AboutMe() {
         <Card className="bg-primary/5 border-primary/20">
           <CardContent className="pt-6">
             <p className="text-base leading-relaxed">
-              I am a client-oriented Project Manager with <strong>10 years of experience</strong> in delivering complex and multifaceted ICT systems, including implementations for RIS/PACS, RPA-driven AI and HRIS/HCM systems. With <strong>5 years of experience as a Customer Success Manager</strong> and a background in Occupational Therapy, my goal is to understand my clients' requirements and successfully deliver on projects that bring value.
+              As a CSM and PM professional with <strong>15+ years of driving adoption and expansion</strong> for complex B2B technology solutions across APAC, I've combined deep CSM experience (Intelerad) with technical project delivery expertise in AI/RPA automation (Cognetics) and healthcare technology. I've proven my ability to <strong>bridge technical teams and executive stakeholders</strong> while managing multimillion-dollar implementations across diverse markets. With a background in Occupational Therapy, I have a unique outlook on understanding clients' requirements and developing the relationships to successfully deliver on projects that bring value.
             </p>
           </CardContent>
         </Card>

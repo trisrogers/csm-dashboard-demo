@@ -17,10 +17,15 @@ export default function Header() {
       <div className="flex h-14 items-center px-6">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 mr-8">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">A</span>
-          </div>
-          <span className="font-semibold text-lg">Mock CSM Dashboard</span>
+          <svg
+            viewBox="0 0 256 176"
+            className="h-7 w-auto"
+            fill="currentColor"
+            style={{ color: '#D97757' }}
+          >
+            <path d="M144.3 0H111.7L0 176h36.8l22.5-35.5h137.4l22.5 35.5H256L144.3 0zm8.4 108.2H103.3L128 67.8l24.7 40.4z" />
+          </svg>
+          <span className="font-semibold text-lg">CSM Dashboard</span>
         </Link>
 
         {/* Navigation */}

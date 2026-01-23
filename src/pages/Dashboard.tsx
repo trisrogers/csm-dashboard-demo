@@ -6,7 +6,6 @@ import KPIScorecard from '@/components/dashboard/KPIScorecard'
 import AccountsAtRisk from '@/components/dashboard/AccountsAtRisk'
 import RecentActivity from '@/components/dashboard/RecentActivity'
 import ExpansionOpportunities from '@/components/dashboard/ExpansionOpportunities'
-import RegionalMap from '@/components/dashboard/RegionalMap'
 import { accounts } from '@/data/accounts'
 import { calculatePortfolioMetrics, formatCurrency, formatPercentage } from '@/lib/calculations'
 
@@ -123,9 +122,8 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Regional Map & Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <RegionalMap accounts={accounts} />
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <HealthDistributionChart data={metrics.accountsByHealth} accounts={accounts} />
         <KPIScorecard items={kpiItems} />
       </div>
